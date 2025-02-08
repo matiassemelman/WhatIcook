@@ -37,6 +37,11 @@ export function IngredientInput() {
     setError('');
   };
 
+  const clearAllIngredients = () => {
+    setIngredients([]);
+    setError('');
+  };
+
   const categoryLabels: Record<Recipe['category'], string> = {
     principal: 'Plato Principal',
     entrada: 'Entrada',
@@ -47,24 +52,35 @@ export function IngredientInput() {
 
   const getCategoryChipStyle = (isSelected: boolean) => {
     const backgroundColor = isSelected 
-      ? Colors.light.tint 
-      : (colorScheme === 'dark' ? '#2C2C2C' : '#f0f0f0');
+      ? '#0a7ea4' // Color fijo para seleccionado que funciona en ambos modos
+      : (colorScheme === 'dark' ? '#3A3A3A' : '#f0f0f0');
     
     return [
       styles.categoryChip,
-      { backgroundColor },
-      isSelected && styles.selectedCategoryChip
+      { backgroundColor }
     ];
   };
 
   const getCategoryTextStyle = (isSelected: boolean) => {
-    if (isSelected) return undefined;
-    return colorScheme === 'dark' ? styles.darkModeText : undefined;
+    if (isSelected) {
+      return { color: '#FFFFFF', fontWeight: '600' as const }; // Especificar el tipo literal
+    }
+    return { color: colorScheme === 'dark' ? '#E0E0E0' : Colors.light.text };
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="subtitle">Mis Ingredientes</ThemedText>
+      <View style={styles.headerContainer}>
+        <ThemedText type="subtitle">Mis Ingredientes</ThemedText>
+        {ingredients.length > 0 && (
+          <TouchableOpacity 
+            onPress={clearAllIngredients}
+            style={styles.clearButton}
+          >
+            <ThemedText style={styles.clearButtonText}>Limpiar todo</ThemedText>
+          </TouchableOpacity>
+        )}
+      </View>
       
       <View style={styles.inputContainer}>
         <TextInput
@@ -107,22 +123,23 @@ export function IngredientInput() {
             <TouchableOpacity
               style={[
                 styles.categoryChip,
-                !selectedCategory && styles.selectedCategoryChip
+                { backgroundColor: !selectedCategory ? '#0a7ea4' : (colorScheme === 'dark' ? '#3A3A3A' : '#f0f0f0') }
               ]}
               onPress={() => setSelectedCategory(undefined)}
             >
-              <ThemedText>Todas</ThemedText>
+              <ThemedText style={{ color: !selectedCategory ? '#FFFFFF' : (colorScheme === 'dark' ? '#E0E0E0' : Colors.light.text) }}>
+                Todas
+              </ThemedText>
             </TouchableOpacity>
             {CATEGORIES.map(category => (
               <TouchableOpacity
                 key={category}
-                style={[
-                  styles.categoryChip,
-                  selectedCategory === category && styles.selectedCategoryChip
-                ]}
+                style={getCategoryChipStyle(selectedCategory === category)}
                 onPress={() => setSelectedCategory(category)}
               >
-                <ThemedText>{categoryLabels[category]}</ThemedText>
+                <ThemedText style={getCategoryTextStyle(selectedCategory === category)}>
+                  {categoryLabels[category]}
+                </ThemedText>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -178,13 +195,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     marginRight: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: 'transparent',
   },
   selectedCategoryChip: {
-    backgroundColor: Colors.light.tint,
-    borderColor: Colors.light.tint,
+    borderColor: 'transparent',
   },
   darkModeText: {
     color: '#FFFFFF',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  clearButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    backgroundColor: '#ff4444',
+  },
+  clearButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
