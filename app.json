@@ -13,10 +13,12 @@
     },
     "android": {
       "package": "com.whaticook.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": []
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +39,14 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "whaticook"
+      }
+    },
+    "owner": "whaticook",
+    "githubUrl": "https://github.com/tu-usuario/WhatIcook",
+    "sourceUrl": "https://github.com/tu-usuario/WhatIcook"
   }
 }
