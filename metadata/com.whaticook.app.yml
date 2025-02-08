@@ -1,8 +1,11 @@
-.Categories: Cooking
+Categories:
+  - Food
+  - Cooking
 License: GPL-3.0-only
 AuthorName: WhatIcook Team
 SourceCode: https://gitlab.com/tu-usuario/WhatIcook
 IssueTracker: https://gitlab.com/tu-usuario/WhatIcook/-/issues
+WebSite: https://gitlab.com/tu-usuario/WhatIcook
 
 AutoName: WhatIcook
 
@@ -16,6 +19,17 @@ Builds:
     subdir: android
     gradle:
       - yes
+    rm:
+      - node_modules
+    prebuild:
+      - npm install
+    scanignore:
+      - android/build
+      - node_modules
+
+MaintainerNotes: |
+  Built using Expo and React Native.
+  Uses yarn for dependency management.
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
