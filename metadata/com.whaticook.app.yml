@@ -1,13 +1,13 @@
 .Categories: Cooking
 License: GPL-3.0-only
 AuthorName: WhatIcook Team
-SourceCode: https://github.com/tu-usuario/WhatIcook
-IssueTracker: https://github.com/tu-usuario/WhatIcook/issues
+SourceCode: https://gitlab.com/tu-usuario/WhatIcook
+IssueTracker: https://gitlab.com/tu-usuario/WhatIcook/-/issues
 
 AutoName: WhatIcook
 
 RepoType: git
-Repo: https://github.com/tu-usuario/WhatIcook.git
+Repo: https://gitlab.com/tu-usuario/WhatIcook.git
 
 Builds:
   - versionName: 1.0.0
